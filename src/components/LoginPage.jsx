@@ -13,18 +13,18 @@ function LoginPage(){
         setError('')
 
         try {
-            const response = await axios.post('http://localhost:5000/api/usuarios', {
+            const response = await axios.get('http://localhost:5000/api/usuarios', {
                 email: email,
                 senha: password
             })
 
-            console.log('Usuário cadastrado com sucesso:', response.data)
-            alert('Cadastro realizado com sucesso!')
+            console.log('Usuário logado:', response.data)
+            alert('Usuário logado com sucesso!')
             setEmail('')
             setPassword('')
         } catch (err) {
-            console.error('Erro ao cadastrar:', err)
-            setError(err.response?.data?.mensagem || 'Erro ao cadastrar usuário')
+            console.error('Erro ao logar:', err)
+            setError(err.response?.data?.mensagem || 'Erro ao tentar logar')
         } finally {
             setLoading(false)
         }
@@ -57,7 +57,7 @@ function LoginPage(){
                     class='p-2 w-48 border border-gray-400 rounded-md hover:bg-gray-800 hover:text-gray-200 font-semibold'
                     disabled={loading}
                 >
-                    {loading ? 'Cadastrando...' : 'Acessar'}
+                    {loading ? 'Acessando...' : 'Acessar'}
                 </button>
             </form>
         </section>
