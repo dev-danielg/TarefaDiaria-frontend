@@ -2,6 +2,11 @@ import { useState } from 'react'
 import axios from 'axios'
 
 function LoginPage(){
+
+    function NewUser(){
+        alert('Redirecionando...')
+    }
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
@@ -59,6 +64,7 @@ function LoginPage(){
                 >
                     {loading ? 'Acessando...' : 'Acessar'}
                 </button>
+                <p class='text-gray-400 font-semibold'>Não tem conta? <span class='text-gray-800 font-semibold cursor-pointer' onClick={NewUser}>Clique aqui!</span></p>
             </form>
         </section>
         </>
