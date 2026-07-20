@@ -13,6 +13,11 @@ function NewUserPage(){
         navigate('/')
     }
 
+    function ToMain(){
+        navigate('/Main')
+    }
+
+
     const handleCadastro = async (e) => {
         e.preventDefault()
         setLoading(true)
@@ -30,6 +35,7 @@ function NewUserPage(){
             setName('')
             setEmail('')
             setPassword('')
+            ToMain()
         } catch (err) {
             console.error('Erro ao cadastrar:', err)
             setError(err.response?.data?.mensagem || 'Erro ao tentar cadastrar usuário')
