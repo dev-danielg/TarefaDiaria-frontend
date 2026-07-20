@@ -9,6 +9,10 @@ function LoginPage(){
         navigate('/NewUserPage')
     }
 
+    function ToMain(){
+        navigate('/Main')
+    }
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
@@ -20,7 +24,7 @@ function LoginPage(){
         setError('')
 
         try {
-            const response = await axios.get('http://localhost:5000/api/usuarios', {
+            const response = await axios.post('http://localhost:5000/api/usuarios', {
                 email: email,
                 senha: password
             })
@@ -29,6 +33,7 @@ function LoginPage(){
             alert('Usuário logado com sucesso!')
             setEmail('')
             setPassword('')
+            ToMain()
         } catch (err) {
             console.error('Erro ao logar:', err)
             setError(err.response?.data?.mensagem || 'Erro ao tentar logar')
