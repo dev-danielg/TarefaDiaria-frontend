@@ -1,10 +1,10 @@
 import { useState } from 'react'
 
 function MainPage() {
-  
 
   return (
     <>
+      <h1>Funcionando!</h1>
     </>
   )
 }
