@@ -16,8 +16,6 @@
 ### Depois de clonar o projeto, rode os seguintes comandos no terminal:
 
 <code>npm i</code>
-<code>npm i axios</code>
-<code>npm install react-router-dom</code>
 
 ### Para rodar o front na sua máquina:
 
