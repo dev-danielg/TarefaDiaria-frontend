@@ -1,11 +1,35 @@
 import { useState } from 'react'
 import {Eraser, X} from 'lucide-react';
+import { Axios } from 'axios';
 import { motion, AnimatePresence } from 'motion/react'
 
 function MainPage() {
 
   const [tarefa, setTarefa] = useState('');
   const [mostrarToggle, setMostrarToggle] = useState(false)
+
+  const [titulo, setTitulo] = useState('');
+  const [descricao, setDescricao] = useState('');
+
+  const enviarTarefa = async (e) => {
+    e.preventDefault()
+
+
+    try{
+      const response = await axios.post('colocar url aqui',{
+        titulo: titulo,
+        descricao: descricao
+      })
+      console.log('tarefa enviada com sucesso!')
+      setTitulo('')
+      setDescricao('')
+      setMostrarToggle(false)
+    }catch(error){
+      console.log('erro ao enviar tarefa', error)
+    }finally{
+      
+    }
+  }
 
   return (
     <>
@@ -23,29 +47,6 @@ function MainPage() {
 
         <AnimatePresence>
             {mostrarToggle && 
-            // <div 
-            // className='w-96 px-2 h-96 border border-gray-400 bg-slate-100 rounded-xl flex flex-col gap-2 items-center justify-center absolute inset-y' >
-            //     <span className='w-full ' onClick={() => setMostrarToggle(!mostrarToggle)}>
-            //       <X
-            //       className='text-red-400 cursor-pointer transition duration-250 hover:text-red-500'
-            //       />
-            //     </span>
-            //     <label className='font-semibold w-full border'>
-            //       Título
-            //     </label>
-            //     <input type='text'
-            //     required
-            //     className='w-full p-2 border border-gray-400 bg-gray-200 rounded-xl transition duration-150 focus:outline-none focus:ring-2 focus:ring-blue-600' />
-
-            // <label className='font-semibold w-full border mt-4'>
-            //   Descrição
-            // </label>
-            // <textarea className='h-fit p-2 border border-gray-400 bg-gray-200 rounded-xl w-full transition duration-150 focus:outline-none focus:ring-2 focus:ring-blue-600'></textarea>
-
-            // <button className='w-64 p-2 mt-6 bg-sky-400 font-semibold cursor-pointer rounded-xl transition duration-200 hover:shadow-xl' type='submit'>
-            //     Adicionar
-            // </button>
-            // </div>
               <motion.div
               className='fixed inset-0 bg-black/40 flex items-center justify-center z-50'
               initial={{ opacity: 0 }}
@@ -63,25 +64,34 @@ function MainPage() {
                 onClick={(e) => e.stopPropagation()}
               >
                 <span className='w-full' onClick={() => setMostrarToggle(false)}>
-                  <X className='text-red-400 cursor-pointer transition duration-250 hover:text-red-500' />
-                </span>
+                    <X className='text-red-400 cursor-pointer transition duration-250 hover:text-red-500' />
+                  </span>
 
-                <label className='font-semibold w-full border'>Título</label>
-                <input
-                  type='text'
+                <form onSubmit={enviarTarefa} className='w-full'>  
+                  <label className='font-semibold w-full '>Título</label>
+                  <input
+                    type='text'
+                    required
+                    className='w-full p-2 border border-gray-400 bg-gray-200 rounded-xl transition duration-150 focus:outline-none focus:ring-2 focus:ring-blue-600'
+                    value={titulo}
+                    onChange={(e) => setTitulo(e.target.value)}
+                    required
+                  />
+                  <label className='font-semibold w-full mt-4'>Descrição</label>
+                  <textarea
+                  className='h-fit p-2 border border-gray-400 bg-gray-200 rounded-xl w-full transition duration-150 focus:outline-none focus:ring-2 focus:ring-blue-600'
+                  value={descricao}
+                  onChange={(e) => setDescricao(e.target.value)}
                   required
-                  className='w-full p-2 border border-gray-400 bg-gray-200 rounded-xl transition duration-150 focus:outline-none focus:ring-2 focus:ring-blue-600'
-                />
-
-                <label className='font-semibold w-full border mt-4'>Descrição</label>
-                <textarea className='h-fit p-2 border border-gray-400 bg-gray-200 rounded-xl w-full transition duration-150 focus:outline-none focus:ring-2 focus:ring-blue-600'></textarea>
-
-                <button
-                  className='w-64 p-2 mt-6 bg-sky-400 font-semibold cursor-pointer rounded-xl transition duration-200 hover:shadow-xl'
-                  type='submit'
-                >
-                  Adicionar
-                </button>
+                  >
+                  </textarea>
+                  <button
+                    className='w-full p-2 mt-6 bg-sky-400 font-semibold cursor-pointer rounded-xl transition duration-200 hover:shadow-xl'
+                    type='submit'
+                  >
+                    Adicionar
+                  </button>
+                </form>
               </motion.div>
             </motion.div>
           }
